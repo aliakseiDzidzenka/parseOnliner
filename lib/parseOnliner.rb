@@ -30,13 +30,14 @@ session.find_all("figure a img", visible: :all).each { |e| images.push(e['src'])
 
 # внутри всех элементов с классом b-main-page-grid-4 ищу описание новости и заголовок
 session.find_all(".b-main-page-grid-4").each do |e| 
-	e.find_all("p", visible: :all).each do |par| 
-		# т.к. в результаты попадут описание тем форума, 
-		# то в массив с описанием пушим ровно столько элементов, сколько в массивы изображений
-		descriptions.push(par.text) if descriptions.length < images.length
-	end
-	# нахожу заголовки новостей и пушу в массив те, что не ссылаются на темы форума
-	e.find_all("article h2 a, h3 a").each { |h| headers.push(h.text) if /.+forum.+/.match(h['href']) == nil }
+  e.find_all("p", visible: :all).each do |par| 
+    # т.к. в результаты попадут описание тем форума, 
+    # то в массив с описанием пушим ровно столько элементов, сколько в массивы изображений
+    descriptions.push(par.text) if descriptions.length < images.length
+  end
+  
+  # нахожу заголовки новостей и пушу в массив те, что не ссылаются на темы форума
+  e.find_all("article h2 a, h3 a").each { |h| headers.push(h.text) if /.+forum.+/.match(h['href']) == nil }
 end
 
 # массив для строк csv
